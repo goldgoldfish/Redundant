@@ -32,7 +32,7 @@ void loop() { //begin loop
     curr_time_micro = micros(); //get the current time
     while (Serial.available()) {
       inByte = Serial.read(); //read the data on the serial port
-      if (inByte == 89) {
+      if (inByte == 170) {
         is_Master = 0; //set this micro to slave mode
         last_heartbeat_rec = micros(); //get the current time
         digitalWrite(masterLED, is_Master); //update the LED
@@ -42,21 +42,17 @@ void loop() { //begin loop
       digitalWrite(LED, HIGH);   // turn the LED on
       heartbeat(); //send heartbeat
       prev_time_micro = curr_time_micro;
-      Serial.write("if\n");
     } //end if
     else if (!(is_Master) && (last_heartbeat_rec + 20000 < curr_time_micro)) { //change mirco to master
       is_Master = 1; //set this micro to master mode
       digitalWrite(LED, HIGH); // turn the LED on
       heartbeat(); //send heartbeat
       prev_time_micro = curr_time_micro;
-      Serial.write("else if\n");
     } //end else if
     else { //do stuff for slave mode
       digitalWrite(LED, LOW); //turn LED off
-      Serial.write("I am slave\n");
     } //end else
     digitalWrite(masterLED, is_Master); //update LED
-    Serial.write("iter\n");
   } //end while
 } //end loop
 
@@ -68,7 +64,7 @@ void startup() { //begin startup
   while ((time_curr < (time_begin + 2000)) && (no_cmmd)) { //check if 2 secs have passed
     while (Serial.available()) { //check if there is something on the serial port to read
       inByte = Serial.read(); //read the data on the serial port
-      if (inByte == 89) {
+      if (inByte == 170) {
         is_Master = 0; //set the master status to be false
         last_heartbeat_rec = micros(); //get the current time in uS
         no_cmmd = 0; //a command has been receiced
@@ -78,10 +74,9 @@ void startup() { //begin startup
   } //end while
   //if another controller has not assumed command this one will
   digitalWrite(masterLED, is_Master); //update status LED
-  Serial.write("Done Startup\n");
 } //end startup
 
 void heartbeat() {
-  Serial.write("I am master\n"); //send a value of 170 to indicate this controller is the master
+  Serial.write(170); //send a value of 170 to indicate this controller is the master
   Serial.flush(); //wait for the transfer to be complete
 } //end heartbeat
