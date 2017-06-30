@@ -1,3 +1,15 @@
+/*
+ * Redundant_micro
+ * Ben Wedemire
+ * 
+ * Description: This code is meant for two arduino like controllers connected
+ * together by a UART interface running at 115200 baud. The serial interface
+ * is a uses small, single byte, messages to update the other controller on their
+ * statues and critical data. The system is designed so that if one controller
+ * fails the other one will immdiately take over and begin controller the device
+ * that the controller group is controlling.
+ */
+
 //declaring pin variables
 int masterLED = 8;
 int LED = 11;
