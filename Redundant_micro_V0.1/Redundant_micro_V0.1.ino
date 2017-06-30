@@ -5,7 +5,7 @@ int red_ok = 13;
 
 //declaring global variables
 int is_Master = 1;
-const int incr_time = 1000; //time in milliseconds between LED incriment
+const unsigned long incr_time = 10; //time in milliseconds between LED incriment
 unsigned long curr_time_micro = 0;
 unsigned long last_heartbeat_sent = 0;
 unsigned long last_heartbeat_rec = 0;
