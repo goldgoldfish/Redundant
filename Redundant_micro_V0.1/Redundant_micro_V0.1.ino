@@ -47,7 +47,7 @@ void loop() {
       } //end if
     } //end while
     curr_time_micro = micros(); //get the current time
-    if ((is_Master) && (curr_time_micro >= last_heartbeat_sent + 1000)) { //if the micro is the master and 5ms has elapsed
+    if ((is_Master) && (curr_time_micro >= last_heartbeat_sent + 500)) { //if the micro is the master and 5ms has elapsed
       if ((curr_time_micro) >= (last_LED_up + (incr_time*1000))){ //check if enough time has elasped since last led val update
         prev_LED_data = curr_LED_data; //sync curr and prev data
         curr_LED_data++; //incriment data
@@ -57,7 +57,7 @@ void loop() {
       last_heartbeat_sent = curr_time_micro;
       analogWrite(LED, curr_LED_data); //update the LED
     } //end if
-    else if (!(is_Master) && (curr_time_micro > last_heartbeat_rec + 5000)) { //change mirco to master if no recent heartbeat
+    else if (!(is_Master) && (curr_time_micro > last_heartbeat_rec + 2500)) { //change mirco to master if no recent heartbeat
       is_Master = 1; //set this micro to master mode
       prev_LED_data = curr_LED_data; //sync curr and prev data
       curr_LED_data++; //incriment data
