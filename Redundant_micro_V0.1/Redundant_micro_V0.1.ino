@@ -5,7 +5,7 @@ int LED = 11;
 
 //declaring global variables
 int is_Master = 1;
-int incr_time = 1000; //time in milliseconds between LED incriment
+const int incr_time = 1000; //time in milliseconds between LED incriment
 unsigned long curr_time_micro = 0;
 unsigned long last_heartbeat_sent = 0;
 unsigned long last_heartbeat_rec = 0;
@@ -44,6 +44,7 @@ void loop() {
         is_Master = 0; //set this micro to slave mode
         last_heartbeat_rec = micros(); //get the current time
         digitalWrite(masterLED, is_Master); //update the LED
+        digitalWrite(LED, LOW); //turn LED off
       } //end if
     } //end while
     curr_time_micro = micros(); //get the current time
@@ -66,8 +67,7 @@ void loop() {
       analogWrite(LED, curr_LED_data); //update the LED
     } //end else if
     else { //do other stuff
-      if(is_Master);
-      else digitalWrite(LED, LOW); //turn LED off
+      
     } //end else
     digitalWrite(masterLED, is_Master); //update LED
   } //end while
@@ -105,6 +105,8 @@ int get_Data(){
   while(!(Serial.available()) || iter > 1000){ //wait for data to come in
     iter++;
   } //end while
-  return Serial.read(); //read byte into data_in
+  int temp = Serial.read(); //get data
+  if (temp < 0) return 0; //return 0 if bad values
+  return temp; //return data from serial port
 } //end get_Data
 
