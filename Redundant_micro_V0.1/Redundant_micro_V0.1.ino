@@ -1,7 +1,7 @@
 //declaring pin variables
 int masterLED = 8;
 int LED = 11;
-int red_ok = 13;
+int red_ok = 12;
 
 //declaring global variables
 int is_Master = 1;
