@@ -5,7 +5,7 @@ int red_ok = 13;
 
 //declaring global variables
 int is_Master = 1;
-const int incr_time = 1000; //time in milliseconds between LED incriment
+const unsigned long incr_time = 100; //time in milliseconds between LED incriment
 unsigned long curr_time_micro = 0;
 unsigned long last_heartbeat_sent = 0;
 unsigned long last_heartbeat_rec = 0;
@@ -24,7 +24,7 @@ void setup() {
   pinMode(red_ok, OUTPUT); //set red_ok LED pin to output
   pinMode(LED, OUTPUT); //set LED pin to output
   //start serial
-  Serial.begin(115200); //start up serial communication on pins 0 and 1.
+  Serial.begin(9600); //start up serial communication on pins 0 and 1.
   //do startup
   startup();
 } //end setup
@@ -49,7 +49,8 @@ void loop() {
       } //end if
     } //end while
     curr_time_micro = micros(); //get the current time
-    if ((is_Master) && (curr_time_micro >= last_heartbeat_sent + 2000)) { //if the micro is the master and 5ms has elapsed
+    if ((is_Master) && (curr_time_micro >= last_heartbeat_sent + 500)) { //if the micro is the master and 5ms has elapsed
+      
       if ((curr_time_micro) >= (last_LED_up + (incr_time*1000))){ //check if enough time has elasped since last led val update
         prev_LED_data = curr_LED_data; //sync curr and prev data
         curr_LED_data++; //incriment data
@@ -63,7 +64,7 @@ void loop() {
       analogWrite(LED, curr_LED_data); //update the LED
       Serial.write("if\n");
     } //end if
-    else if (!(is_Master) && (curr_time_micro > last_heartbeat_rec + 5000)) { //change mirco to master if no recent heartbeat
+    else if (!(is_Master) && (curr_time_micro > last_heartbeat_rec + 1000)) { //change mirco to master if no recent heartbeat
       is_Master = 1; //set this micro to master mode
       prev_LED_data = curr_LED_data; //sync curr and prev data
       curr_LED_data++; //incriment data since the controller could've missed data
