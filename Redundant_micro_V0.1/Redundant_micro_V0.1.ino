@@ -11,9 +11,9 @@
  */
 
 //declaring pin variables
-int masterLED = 8;
-int LED = 11;
-int red_ok = 12;
+const int masterLED = 8;
+const int LED = 11;
+const int red_ok = 12;
 
 //declaring global variables
 int is_Master = 1;
